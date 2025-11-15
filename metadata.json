@@ -1,0 +1,5 @@
+{
+  "name": "Scamolingo",
+  "description": "An application to help users identify potential scams, learn about common scam tactics, and get tips on how to stay protected, powered by Gemini.",
+  "requestFramePermissions": []
+}
