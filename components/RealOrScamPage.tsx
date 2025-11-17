@@ -1,7 +1,7 @@
 
 
 import React, { useState } from 'react';
-import { analyzeTextForScam, analyzeUrlForScam } from '../services/geminiService';
+import { analyzeTextForScam, analyzeUrlForScam, isApiKeyAvailable } from '../services/geminiService';
 
 interface RealOrScamPageProps {
   onBack: () => void;
@@ -32,6 +32,20 @@ const QuestionMarkCircleIcon: React.FC<{ className?: string }> = ({ className })
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
     </svg>
+);
+
+const ApiKeyMissingBanner: React.FC = () => (
+    <div className="mb-6 p-4 bg-amber-900/30 border border-amber-500/50 rounded-lg">
+        <div className="flex items-center">
+            <QuestionMarkCircleIcon className="h-6 w-6 text-amber-400 mr-3" />
+            <div>
+                <h3 className="text-amber-300 font-semibold">AI Analysis Feature Unavailable</h3>
+                <p className="text-amber-200 text-sm mt-1">
+                    The scam detection feature requires an API key to function. Please contact the administrator to configure the API key.
+                </p>
+            </div>
+        </div>
+    </div>
 );
 
 
@@ -88,6 +102,7 @@ const AnalysisResult: React.FC<{ content: string }> = ({ content }) => {
 
 export const RealOrScamPage: React.FC<RealOrScamPageProps> = ({ onBack, onUrlScanned }) => {
   const [activeTab, setActiveTab] = useState<'text' | 'url'>('text');
+  const isApiAvailable = isApiKeyAvailable();
   
   const [text, setText] = useState('');
   const [textResult, setTextResult] = useState('');
@@ -140,8 +155,10 @@ export const RealOrScamPage: React.FC<RealOrScamPageProps> = ({ onBack, onUrlSca
         </button>
         <h1 className="text-3xl md:text-4xl font-bold text-white">Real or Scam?</h1>
       </header>
-      
+
       <div className="max-w-3xl mx-auto">
+        {!isApiAvailable && <ApiKeyMissingBanner />}
+
         <div className="mb-6 border-b border-slate-700 flex">
             <button
                 onClick={() => setActiveTab('text')}
@@ -172,7 +189,7 @@ export const RealOrScamPage: React.FC<RealOrScamPageProps> = ({ onBack, onUrlSca
 
             <button
               onClick={handleAnalyzeText}
-              disabled={isTextLoading || !text}
+              disabled={isTextLoading || !text || !isApiAvailable}
               className="mt-4 w-full flex items-center justify-center bg-cyan-600 text-white font-bold py-3 px-4 rounded-md hover:bg-cyan-700 disabled:bg-slate-600 disabled:cursor-not-allowed transition-colors"
             >
               {isTextLoading ? <LoadingSpinner /> : 'Analyze Text'}
@@ -199,7 +216,7 @@ export const RealOrScamPage: React.FC<RealOrScamPageProps> = ({ onBack, onUrlSca
 
             <button
               onClick={handleAnalyzeUrl}
-              disabled={isUrlLoading || !url}
+              disabled={isUrlLoading || !url || !isApiAvailable}
               className="mt-4 w-full flex items-center justify-center bg-cyan-600 text-white font-bold py-3 px-4 rounded-md hover:bg-cyan-700 disabled:bg-slate-600 disabled:cursor-not-allowed transition-colors"
             >
               {isUrlLoading ? <LoadingSpinner /> : 'Analyze URL'}

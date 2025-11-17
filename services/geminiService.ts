@@ -1,20 +1,24 @@
 
 import { GoogleGenAI } from "@google/genai";
 
-if (!process.env.API_KEY) {
-  throw new Error("API_KEY environment variable not set");
-}
+const ai = process.env.API_KEY ? new GoogleGenAI({ apiKey: process.env.API_KEY }) : null;
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+export const isApiKeyAvailable = (): boolean => {
+  return ai !== null;
+};
 
 export const analyzeTextForScam = async (text: string): Promise<string> => {
   if (!text.trim()) {
     return "Please enter some text to analyze.";
   }
 
+  if (!ai) {
+    return "AI analysis is not available. The administrator needs to configure the API key to enable scam detection features.";
+  }
+
   try {
     const prompt = `
-      You are a cybersecurity expert specializing in scam detection. 
+      You are a cybersecurity expert specializing in scam detection.
       Analyze the following text and determine if it is likely a scam.
       Your response should be in Markdown format.
       Start with a clear verdict in bold: **Likely a Scam**, **Potentially a Scam**, or **Likely Legitimate**.
@@ -31,7 +35,7 @@ export const analyzeTextForScam = async (text: string): Promise<string> => {
       model: "gemini-2.5-flash",
       contents: prompt,
     });
-    
+
     return response.text;
   } catch (error) {
     console.error("Error analyzing text with Gemini API:", error);
@@ -43,7 +47,11 @@ export const analyzeUrlForScam = async (url: string): Promise<string> => {
   if (!url.trim()) {
     return "Please enter a URL to analyze.";
   }
-  
+
+  if (!ai) {
+    return "AI analysis is not available. The administrator needs to configure the API key to enable scam detection features.";
+  }
+
   try {
     new URL(url);
   } catch (_) {
@@ -52,7 +60,7 @@ export const analyzeUrlForScam = async (url: string): Promise<string> => {
 
   try {
     const prompt = `
-      You are a cybersecurity expert specializing in scam and phishing detection. 
+      You are a cybersecurity expert specializing in scam and phishing detection.
       Analyze the following URL and determine if the website it points to is likely a scam or malicious.
       Your response should be in Markdown format.
       Start with a clear verdict in bold: **Likely a Scam**, **Potentially a Scam**, or **Likely Legitimate**.
@@ -70,7 +78,7 @@ export const analyzeUrlForScam = async (url: string): Promise<string> => {
       model: "gemini-2.5-flash",
       contents: prompt,
     });
-    
+
     return response.text;
   } catch (error) {
     console.error("Error analyzing URL with Gemini API:", error);
