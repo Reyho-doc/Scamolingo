@@ -132,7 +132,10 @@ export const HideFromTheScamGame: React.FC<HideFromTheScamGameProps> = ({ onBack
      <div className="text-center">
         <h2 className="text-4xl font-bold text-cyan-400 mb-4">🎉 YOU WIN! 🎉</h2>
         <p className="text-slate-300 max-w-xl mx-auto mb-8">Congratulations! You successfully blocked all scam attempts and secured your digital life. You're a true Scamolingo champion!</p>
-        <button onClick={handleStartGame} className="bg-fuchsia-600 text-white font-bold py-3 px-8 rounded-md hover:bg-fuchsia-700 transition-colors">Play Again</button>
+        <div className="flex space-x-4 mt-8 justify-center">
+            <button onClick={handleStartGame} className="bg-fuchsia-600 text-white font-bold py-3 px-8 rounded-md hover:bg-fuchsia-700 transition-colors">Play Again</button>
+            <button onClick={onBack} className="bg-slate-700 text-white font-bold py-3 px-8 rounded-md hover:bg-slate-600 transition-colors">Back to Games</button>
+        </div>
      </div>
   );
 

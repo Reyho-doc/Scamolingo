@@ -18,9 +18,9 @@ const ShieldIcon: React.FC<{ className?: string }> = ({ className }) => (
     </svg>
 );
 
-const BrainIcon: React.FC<{ className?: string }> = ({ className }) => (
+const BookOpenIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <path d="M12 2a2.5 2.5 0 0 0-2.5 2.5c0 .19.03.38.07.56A6.002 6.002 0 0 0 5.5 11c0 2.05.51 3.93 1.34 5.5C4.84 17.5 4 19.13 4 21c0 .55.45 1 1 1h14c.55 0 1-.45 1-1 0-1.87-.84-3.5-2.84-4.5A6.002 6.002 0 0 0 18.5 11c0-2.75-1.8-5.02-4.07-5.94.04-.18.07-.37.07-.56A2.5 2.5 0 0 0 12 2zm-1 14.5c-1 .6-2.5 1.5-2.5 2.5h2v2h-2c0-1.5-1-2.43-1-3.5 0-1.3.73-2.44 1.69-3.13.96-.68 2.31-1.37 2.31-2.87 0-1.9-1.2-3.5-3-3.5-.83 0-1.5.67-1.5 1.5S7.67 11 8.5 11c.83 0 1.5-.67 1.5-1.5S9.17 8 8.5 8c-1.93 0-3.5 1.57-3.5 3.5 0 .85.31 1.62.82 2.24C5.31 14.38 5 15.15 5 16v1h2v-1c0-1.1.9-2 2-2 1.3 0 2.4.84 2.82 2H10v2h2v-2h-.82c.42-1.16 1.52-2 2.82-2 1.1 0 2 .9 2 2v1h2v-1c0-.85-.31-1.62-.82-2.24.51-.62.82-1.39.82-2.24 0-1.93-1.57-3.5-3.5-3.5-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8c-1.8 0-3 1.6-3 3.5 0 1.5 1.35 2.19 2.31 2.87.96.69 1.69 1.83 1.69 3.13 0 1.07-1 2-1 3.5h-2v-2h2c0-1-1.5-1.9-2.5-2.5z"/>
+    <path fillRule="evenodd" d="M12 2.25a.75.75 0 0 1 .75.75v9a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM13.5 4.129c0-1.313.924-2.38 2.125-2.38a.75.75 0 0 1 0 1.5c-.398 0-.725.327-.725.73v12.27c0 .403.327.73.725.73a.75.75 0 0 1 0 1.5c-1.201 0-2.125-1.067-2.125-2.38V4.129ZM8.375 3.129c-1.201 0-2.125 1.067-2.125 2.38v12.27c0 1.313 1.067 2.38 2.375 2.38a.75.75 0 0 0 0-1.5c.398 0 .725-.327.725-.73V5.509c0-.403-.327-.73-.725-.73a.75.75 0 0 0 0-1.5Z" clipRule="evenodd" />
   </svg>
 );
 
@@ -72,27 +72,27 @@ export const GamesPage: React.FC<GamesPageProps> = ({ onBack, navigateTo }) => {
             </button>
 
             <button
+                onClick={() => navigateTo(Page.WhiteHatGame)}
+                className="relative group p-8 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-fuchsia-400 hover:bg-slate-800 transition-all duration-300 text-center flex flex-col items-center"
+            >
+                <div className="absolute top-3 right-3 bg-fuchsia-500/20 text-fuchsia-300 text-xs font-bold uppercase px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    Intermediate
+                </div>
+                <TerminalIcon className="h-16 w-16 mx-auto text-slate-400 group-hover:text-fuchsia-400 transition-colors" />
+                <h2 className="text-2xl font-semibold text-white mt-4">White-Hat</h2>
+                <p className="text-slate-400 mt-2">A simulation game where you analyze scams and shut down malicious networks.</p>
+            </button>
+
+             <button
                 onClick={() => navigateTo(Page.KnowYourScams)}
                 className="relative group p-8 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-amber-400 hover:bg-slate-800 transition-all duration-300 text-center flex flex-col items-center"
             >
                 <div className="absolute top-3 right-3 bg-amber-500/20 text-amber-300 text-xs font-bold uppercase px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     Hard
                 </div>
-                <BrainIcon className="h-16 w-16 mx-auto text-slate-400 group-hover:text-amber-400 transition-colors" />
+                <BookOpenIcon className="h-16 w-16 mx-auto text-slate-400 group-hover:text-amber-400 transition-colors" />
                 <h2 className="text-2xl font-semibold text-white mt-4">Know Your Scams</h2>
                 <p className="text-slate-400 mt-2">Identify specific, technical scam types in a multiple-choice quiz.</p>
-            </button>
-
-             <button
-                onClick={() => navigateTo(Page.WhiteHatGame)}
-                className="relative group p-8 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-red-400 hover:bg-slate-800 transition-all duration-300 text-center flex flex-col items-center"
-            >
-                <div className="absolute top-3 right-3 bg-red-500/20 text-red-300 text-xs font-bold uppercase px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    Expert
-                </div>
-                <TerminalIcon className="h-16 w-16 mx-auto text-slate-400 group-hover:text-red-400 transition-colors" />
-                <h2 className="text-2xl font-semibold text-white mt-4">White-Hat</h2>
-                <p className="text-slate-400 mt-2">A simulation game where you analyze scams and shut down malicious networks.</p>
             </button>
         </div>
     </div>
